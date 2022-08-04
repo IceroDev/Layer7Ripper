@@ -37,7 +37,11 @@ wget https://raw.githubusercontent.com/IceroDev/Layer7Ripper/main/install.sh
 ## Optimisation
 It is interesting to start using the script at midnight, the calculation technique will only be 100% effective from one cycle until midnight (depending on your timezone). 
 
-## Testing
+
+## Disclaimer
+This script is given as is. I can't be responsible for modifications, loss of access or misconfiguration made on your side. You have to make sure that your configurations work or that your script is executable. Make a test before putting in production with a crontab.
+
+# Testing
 To validate a distribution/distribution version, please insert a pull request.
 | Distribution | Compatible ? |
 |:------------:|:------------:|
@@ -46,9 +50,6 @@ To validate a distribution/distribution version, please insert a pull request.
 | Ubuntu 20.04 |      yes     |
 |  Centos 7/8  |      no      |
 
-## Disclaimer
-This script is given as is. I can't be responsible for modifications, loss of access or misconfiguration made on your side. You have to make sure that your configurations work or that your script is executable. Make a test before putting in production with a crontab.
-
-## Special thanks
+# Special thanks
 - [@empty-system](https://github.com/empty-system) For help on some optimizations
 - [@Legendary4226](https://github.com/Legendary4226) For fixing problems that occur at specific times. Quality control.
