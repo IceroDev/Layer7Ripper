@@ -29,6 +29,25 @@ if [ "$EUID" -ne 0 ]
   then echo "ERROR: This script can only be run as root"
   exit
 fi
+
+if ! command -v sudo &> /dev/null
+then
+    echo "sudo could not be found, installing"
+    apt install sudo
+fi
+
+if ! command -v $firewall &> /dev/null
+then
+    echo "$firewall could not be found, installing"
+    apt install "$firewall"
+fi
+
+if ! command -v curl &> /dev/null
+then
+    echo "curl could not be found, installing"
+    apt install curl
+fi
+
 echo -ne '                         (1%)\r'
 
 # This is a way to calculate the maximum number of requests per hour for the actual cycle.
