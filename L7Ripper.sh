@@ -65,7 +65,8 @@ echo -ne '#############             (66%)\r'
 
 # Checking if the file exists. If it does not, it will exit the script.
 if ! [[ -f $tempfile ]];then
-    echo "Great news, no DDOS detected ! :)"    
+    echo "Great news, no DDOS detected ! :)"
+    rm $counting
     exit
 fi
 
