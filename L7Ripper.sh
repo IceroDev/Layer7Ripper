@@ -77,7 +77,7 @@ if [ $firewall == "iptables" ]; then
     while IFS= read -r iptoban
     do
         if ! [[ $(iptables -S | grep $iptoban) ]] ; then
-            sudo iptables -I INPUT -s $iptoban -j DROP
+            sudo iptables -I INPUT -s $iptoban -m comment --comment "DDOS detected ip. Banned by Layer7Ripper" -j DROP
             echo "[ $timecode ] : banned ip $iptoban" >> $ad_logfile
             action=true
         fi
@@ -89,7 +89,7 @@ elif [ $firewall == "ufw" ]; then
     while IFS= read -r iptoban
     do
         if ! [[ $(ufw status | grep $iptoban) ]] ; then
-            sudo ufw insert 1 deny from $iptoban to any
+            sudo ufw insert 1 deny from $iptoban to any comment "DDOS detected ip. Banned by Layer7Ripper"
             echo "[ $timecode ] : banned ip $iptoban" >> $ad_logfile
             action=true
         fi
