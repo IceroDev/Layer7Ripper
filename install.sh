@@ -34,4 +34,4 @@ mkdir /etc/l7ripper
 wget -O /etc/l7ripper/program https://raw.githubusercontent.com/IceroDev/Layer7Ripper/main/L7Ripper.sh
 chmod +x /etc/l7ripper/program
 sleep 1
-(crontab -u $(whoami) -l; echo "$crontab_line" ) | crontab -u $(whoami) -
+(crontab -u $(whoami) -l 2>/dev/null; echo "$crontab_line" ) | crontab -u $(whoami) -
