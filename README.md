@@ -39,7 +39,7 @@ It is interesting to start using the script at midnight, the calculation techniq
 
 ## Testing
 To validate a distribution/distribution version, please insert a pull request.
-| Distribution |   Tested ?   |
+| Distribution | Compatible ? |
 |:------------:|:------------:|
 |   Debian 10  |      yes     |
 |   Debian 11  |      yes     |
