@@ -34,3 +34,9 @@ You'll still have to change values on the program in /etc/l7ripper/program
 wget https://raw.githubusercontent.com/IceroDev/Layer7Ripper/main/install.sh
 ```
 
+## Optimisation
+It is interesting to start using the script at midnight, the calculation technique will only be 100% effective from one cycle until midnight (depending on your timezone). 
+
+## Special thanks
+@empty-system For help on some optimizations
+@Legendary4226 For fixing problems that occur at specific times. Quality control.
