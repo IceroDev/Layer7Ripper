@@ -12,7 +12,7 @@
 
 ######## Configurations ########
 logfile=/var/log/nginx/access.log           # Link to the logfile to check.
-max_connexions_per_hour=100               # Maximum allowed connexions on 1h before beiing banned.
+max_connexions_per_hour=10000               # Maximum allowed connexions on 1h before beiing banned.
 firewall=iptables                           # Used Firewall (ufw|iptables).
 counting=/tmp/anti-ddos_counting.tmp        # Temporary logfile localisation, will be deleted at the end of script.
 tempfile=/tmp/anti-ddos.tmp                 # Temporary logfile localisation, will be deleted at the end of script.
