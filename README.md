@@ -24,10 +24,30 @@ This program works in case the attacker uses only one or a limited number of add
 ## Installation
 
 ### Downloading the script
-Be careful, you will have to create the crontab yourself.
+### Manual
 ```
 wget https://raw.githubusercontent.com/IceroDev/Layer7Ripper/main/L7Ripper.sh
 ```
+#### Setting up the service file
+/usr/lib/systemd/system/layer7ripper.service :
+```
+[Unit]
+Description=an antiddos service
+
+[Service]
+ExecStart=/path/to/script
+Restart=always
+RestartSec=30s
+
+[Install]
+WantedBy=multi-user.target
+```
+Enable the script at startup and start it :
+```
+systemctl enable layer7ripper
+systemctl start layer7ripper
+```
+
 ### Full installation script
 You'll still have to change values on the program in /etc/l7ripper/program
 ```
