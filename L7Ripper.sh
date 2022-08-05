@@ -16,7 +16,7 @@ max_connexions_per_hour=100               # Maximum allowed connexions on 1h bef
 firewall=iptables                           # Used Firewall (ufw|iptables).
 counting=/tmp/anti-ddos_counting.tmp        # Temporary logfile localisation, will be deleted at the end of script.
 tempfile=/tmp/anti-ddos.tmp                 # Temporary logfile localisation, will be deleted at the end of script.
-discord_webhook="https://discord.com/api/webhooks/1003652629215326261/NeyeUgPXJvHbjCf_rr6k8jgYAi1F16DfX6wteEoTr76Mw3PB6-pvdkoDEgDymGtxoO6t"                          # Discord webhook URL for Discord logging (optionnal)
+discord_webhook=""                          # Discord webhook URL for Discord logging (optionnal)
 ################################
 
 
