@@ -10,7 +10,7 @@
 #               Developed by Jean Staffe               
 
 mkdir /etc/l7ripper
-wget -O /etc/l7ripper/program https://raw.githubusercontent.com/IceroDev/Layer7Ripper/main/L7Ripper.sh
+wget -O /etc/l7ripper/program https://raw.githubusercontent.com/IceroDev/Layer7Ripper/stable/L7Ripper.sh
 chmod +x /etc/l7ripper/program
 echo -e "[Unit]\nDescription=starting an antiddos service\n\n[Service]\nExecStart=/etc/l7ripper/program\nRestart=always\nRestartSec=60s\n\n[Install]\nWantedBy=multi-user.target" > /usr/lib/systemd/system/layer7ripper
 systemctl enable layer7ripper
