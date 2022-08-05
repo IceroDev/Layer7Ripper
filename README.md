@@ -26,7 +26,7 @@ This program works in case the attacker uses only one or a limited number of add
 ### Downloading the script
 ### Manual
 ```
-wget https://raw.githubusercontent.com/IceroDev/Layer7Ripper/main/L7Ripper.sh
+wget https://raw.githubusercontent.com/IceroDev/Layer7Ripper/stable/L7Ripper.sh
 ```
 #### Setting up the service file
 /usr/lib/systemd/system/layer7ripper.service :
@@ -51,7 +51,7 @@ systemctl start layer7ripper
 ### Full installation script
 You'll still have to change values on the program in /etc/l7ripper/program
 ```
-wget https://raw.githubusercontent.com/IceroDev/Layer7Ripper/main/install.sh
+wget https://raw.githubusercontent.com/IceroDev/Layer7Ripper/stable/install.sh
 ```
 
 ## Optimisation
