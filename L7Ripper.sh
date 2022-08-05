@@ -16,7 +16,6 @@ max_connexions_per_hour=10000               # Maximum allowed connexions on 1h b
 firewall=iptables                           # Used Firewall (ufw|iptables).
 counting=/tmp/anti-ddos_counting.tmp        # Temporary logfile localisation, will be deleted at the end of script.
 tempfile=/tmp/anti-ddos.tmp                 # Temporary logfile localisation, will be deleted at the end of script.
-ad_logfile=/var/log/anti-ddos.log           # Logfile for software
 discord_webhook=""                          # Discord webhook URL for Discord logging (optionnal)
 ################################
 
@@ -48,7 +47,6 @@ then
     apt install curl
 fi
 
-echo -ne '                         (1%)\r'
 
 # This is a way to calculate the maximum number of requests per hour for the actual cycle.
 current_cycle=$(date +%H)
@@ -64,13 +62,11 @@ if [ $max_requests -lt $max_connexions_per_hour ]; then
     max_requests=$max_connexions_per_hour
 fi
 
-echo -ne '                         (3%)\r'
 
 # Taking the first column of the logfile, sorting it, counting the number of occurences, sorting it again and taking the first 50 lines.
 cat $logfile | awk '{print $1}' | sort -n | uniq -c | sort -nr | head -50 >> $counting
 sleep 5
 
-echo -ne '#####                     (33%)\r'
 
 # Reading the file and if the number of occurences is greater than the maximum allowed, it will write the IP in the temporary file.
 while IFS=" " read -r occ ip; do
@@ -80,7 +76,6 @@ while IFS=" " read -r occ ip; do
 done<$counting
 sleep 5
 
-echo -ne '#############             (66%)\r'
 
 # Checking if the file exists. If it does not, it will exit the script.
 if ! [[ -f $tempfile ]];then
@@ -89,28 +84,27 @@ if ! [[ -f $tempfile ]];then
     exit
 fi
 
-timecode=$(date +%d-%m-%Y--%H:%M)
 action=false
 
 # Banning the IP from the selected firewall.
 if [ $firewall == "iptables" ]; then
     while IFS= read -r iptoban
     do
-        if ! [[ $(iptables -S | grep $iptoban) ]] ; then
+        if ! [[ $(iptables -S | /bin/grep $iptoban) ]] ; then
             sudo iptables -I INPUT -s $iptoban -m comment --comment "DDOS detected ip. Banned by Layer7Ripper" -j DROP
-            echo "[ $timecode ] : banned ip $iptoban" >> $ad_logfile
+            echo "banned ip $iptoban"
             action=true
         fi
     done<"$tempfile"
 elif [ $firewall == "ufw" ]; then
-    if [[ $(ufw status | grep "inactive") ]] ; then
-        echo "[ $timecode ] : WARNING : UFW is inactive" >> $ad_logfile
+    if [[ $(ufw status | /bin/grep "inactive") ]] ; then
+        echo "WARNING : UFW is inactive"
     fi
     while IFS= read -r iptoban
     do
-        if ! [[ $(ufw status | grep $iptoban) ]] ; then
+        if ! [[ $(ufw status | /bin/grep $iptoban) ]] ; then
             sudo ufw insert 1 deny from $iptoban to any comment "DDOS detected ip. Banned by Layer7Ripper"
-            echo "[ $timecode ] : banned ip $iptoban" >> $ad_logfile
+            echo "banned ip $iptoban"
             action=true
         fi
     done<"$tempfile"
@@ -121,7 +115,6 @@ else
     exit
 fi
 
-echo -ne '###################       (89%)\r'
 
 # This is a way to check if the variable is empty or not. Sending to logfile the output and if set, send to Discord a notification.
 if [ $action=true ]; then
