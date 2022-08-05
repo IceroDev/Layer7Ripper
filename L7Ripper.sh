@@ -12,11 +12,11 @@
 
 ######## Configurations ########
 logfile=/var/log/nginx/access.log           # Link to the logfile to check.
-max_connexions_per_hour=10000               # Maximum allowed connexions on 1h before beiing banned.
+max_connexions_per_hour=100               # Maximum allowed connexions on 1h before beiing banned.
 firewall=iptables                           # Used Firewall (ufw|iptables).
 counting=/tmp/anti-ddos_counting.tmp        # Temporary logfile localisation, will be deleted at the end of script.
 tempfile=/tmp/anti-ddos.tmp                 # Temporary logfile localisation, will be deleted at the end of script.
-discord_webhook=""                          # Discord webhook URL for Discord logging (optionnal)
+discord_webhook="https://discord.com/api/webhooks/1003652629215326261/NeyeUgPXJvHbjCf_rr6k8jgYAi1F16DfX6wteEoTr76Mw3PB6-pvdkoDEgDymGtxoO6t"                          # Discord webhook URL for Discord logging (optionnal)
 ################################
 
 
@@ -84,7 +84,7 @@ if ! [[ -f $tempfile ]];then
     exit
 fi
 
-action=false
+action="no"
 
 # Banning the IP from the selected firewall.
 if [ $firewall == "iptables" ]; then
@@ -93,7 +93,7 @@ if [ $firewall == "iptables" ]; then
         if ! [[ $(iptables -S | /bin/grep $iptoban) ]] ; then
             sudo iptables -I INPUT -s $iptoban -m comment --comment "DDOS detected ip. Banned by Layer7Ripper" -j DROP
             echo "banned ip $iptoban"
-            action=true
+            action="yes"
         fi
     done<"$tempfile"
 elif [ $firewall == "ufw" ]; then
@@ -105,7 +105,7 @@ elif [ $firewall == "ufw" ]; then
         if ! [[ $(ufw status | /bin/grep $iptoban) ]] ; then
             sudo ufw insert 1 deny from $iptoban to any comment "DDOS detected ip. Banned by Layer7Ripper"
             echo "banned ip $iptoban"
-            action=true
+            action="yes"
         fi
     done<"$tempfile"
 else
@@ -117,10 +117,10 @@ fi
 
 
 # This is a way to check if the variable is empty or not. Sending to logfile the output and if set, send to Discord a notification.
-if [ $action=true ]; then
+if [ $action == "yes" ]; then
     if ! [ -z "$discord_webhook" ]; then
-    blocked_ip=$(paste -s -d ' ' $tempfile)
-    curl -H "Content-Type: application/json" -d '{"username": "IP blocking", "embeds":[{"title":"New IP(s) blocked","description":"'"$blocked_ip"'","color":9899534}]}' "$discord_webhook"
+        blocked_ip=$(paste -s -d ' ' $tempfile)
+        curl -H "Content-Type: application/json" -d '{"username": "IP blocking", "embeds":[{"title":"New IP(s) blocked","description":"'"$blocked_ip"'","color":9899534}]}' "$discord_webhook"
     fi
 fi
 
