@@ -49,8 +49,7 @@ fi
 
 
 # This is a way to calculate the maximum number of requests per hour for the actual cycle.
-current_cycle=$(date +%H)
-current_cycle=$(($(date +%H) + 0))
+current_cycle=$(($(date +%k) + 0))
 mutiplicator=1
 if ! [ current_cycle == "00" ]; then
     multiplicator=$current_cycle
